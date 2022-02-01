@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 const Recipe = (props) => {
   const { recipe } = props;
+  const { push } = useHistory();
+
+  useEffect(() => {});
+
+  const handleEdit = () => {
+    push(`/recipes/update/${recipe.id}`);
+  };
+
+  const handleDelete = (e) => {};
 
   return (
     <div>
