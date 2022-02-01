@@ -18,7 +18,9 @@ const Dashboard = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    recipes.filter((recipe) => recipe === searchTerm);
+    recipes.filter((recipe) => {
+      return setRecipes(recipe === searchTerm);
+    });
   };
 
   return (
@@ -30,7 +32,18 @@ const Dashboard = () => {
           <button>Search</button>
         </div>
       </form>
-      <div className="Recipe-Container"></div>
+      <div className="Recipe-Container">
+        {recipes.map((recipe) => {
+          return (
+            <ul>
+              <li key={recipe.id}>{recipe.title}</li>
+              <li key={recipe.id}>{recipe.source}</li>
+              <li key={recipe.id}>{recipe.category}</li>
+              <li key={recipe.id}>{recipe.instructions}</li>
+            </ul>
+          );
+        })}
+      </div>
     </div>
   );
 };
