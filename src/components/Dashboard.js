@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import "../styles/Dashboard.css"
-
+import "../styles/Dashboard.css";
+import EditRecipe from "./EditRecipe";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -41,42 +41,34 @@ const Dashboard = () => {
         <h1>Your Recipes!</h1>
         <form className="search-group" onSubmit={handleSubmit}>
           <div>
-            <input className="search-bar" type="search" value={searchTerm} onChange={handleChange} /><br/>
+            <input
+              className="search-bar"
+              type="search"
+              value={searchTerm}
+              onChange={handleChange}
+            />
+            <br />
             <button>Search</button>
           </div>
-         
         </form>
         <div className="Recipe-Container">
           {recipes.map((recipe) => {
             return (
-              <ul>
-                <li key={recipe.id}>{recipe.title}</li>
-                <li key={recipe.id}>{recipe.source}</li>
-                <li key={recipe.id}>{recipe.category}</li>
-                <li key={recipe.id}>{recipe.instructions}</li>
-              </ul>
+              <div
+                className="Recipe-card"
+                key={recipe.id}
+                onClick={(e) => {
+                  handleClick(e, recipe);
+                }}
+              >
+                <h3>{recipe.title}</h3>
+                <p>{recipe.source}</p>
+                <p>{recipe.category}</p>
+                <p>{recipe.instructions}</p>
+              </div>
             );
           })}
         </div>
-      </form>
-      <div className="Recipe-Container">
-        {recipes.map((recipe) => {
-          return (
-            <div
-              className="Recipe-card"
-              key={recipe.id}
-              onClick={(e) => {
-                handleClick(e, recipe);
-              }}
-            >
-              <h3>{recipe.title}</h3>
-              <p>{recipe.source}</p>
-              <p>{recipe.category}</p>
-              <p>{recipe.instructions}</p>
-            </div>
-          );
-        })}
-
       </div>
     </div>
   );
