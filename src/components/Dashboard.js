@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import "../styles/Dashboard.css"
+
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,9 +22,18 @@ const Dashboard = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     recipes.filter((recipe) => {
-      return setRecipes(recipe === searchTerm);
+      return setRecipes(
+        recipe.title === searchTerm || recipe.category === searchTerm
+      );
     });
   };
+
+  const { push } = useHistory();
+
+  function handleClick(e, recipe) {
+    e.preventDefault();
+    push(`/dashboard/${recipe.id}`);
+  }
 
   return (
     <div className="dashboard-container">
@@ -47,6 +58,25 @@ const Dashboard = () => {
             );
           })}
         </div>
+      </form>
+      <div className="Recipe-Container">
+        {recipes.map((recipe) => {
+          return (
+            <div
+              className="Recipe-card"
+              key={recipe.id}
+              onClick={(e) => {
+                handleClick(e, recipe);
+              }}
+            >
+              <h3>{recipe.title}</h3>
+              <p>{recipe.source}</p>
+              <p>{recipe.category}</p>
+              <p>{recipe.instructions}</p>
+            </div>
+          );
+        })}
+
       </div>
     </div>
   );
