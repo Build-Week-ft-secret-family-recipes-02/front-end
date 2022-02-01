@@ -1,5 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import Recipe from "./Recipe";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,6 +25,13 @@ const Dashboard = () => {
     });
   };
 
+  const { push } = useHistory();
+
+  function handleClick(e, recipe) {
+    e.preventDefault();
+    push(`/dashboard/${recipe.id}`);
+  }
+
   return (
     <div>
       <h1>Your Recipes!</h1>
@@ -35,12 +44,18 @@ const Dashboard = () => {
       <div className="Recipe-Container">
         {recipes.map((recipe) => {
           return (
-            <ul>
-              <li key={recipe.id}>{recipe.title}</li>
-              <li key={recipe.id}>{recipe.source}</li>
-              <li key={recipe.id}>{recipe.category}</li>
-              <li key={recipe.id}>{recipe.instructions}</li>
-            </ul>
+            <div
+              className="Recipe-card"
+              key={recipe.id}
+              onClick={(e) => {
+                handleClick(e, recipe);
+              }}
+            >
+              <h3>{recipe.title}</h3>
+              <p>{recipe.source}</p>
+              <p>{recipe.category}</p>
+              <p>{recipe.instructions}</p>
+            </div>
           );
         })}
       </div>
