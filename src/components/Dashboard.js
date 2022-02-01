@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import Recipe from "./Recipe";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,7 +20,9 @@ const Dashboard = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     recipes.filter((recipe) => {
-      return setRecipes(recipe === searchTerm);
+      return setRecipes(
+        recipe.title === searchTerm || recipe.category === searchTerm
+      );
     });
   };
 
