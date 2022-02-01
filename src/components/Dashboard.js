@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import "../styles/Dashboard.css"
+
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -34,12 +36,27 @@ const Dashboard = () => {
   }
 
   return (
-    <div>
-      <h1>Your Recipes!</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <input type="search" value={searchTerm} onChange={handleChange} />
-          <button>Search</button>
+    <div className="dashboard-container">
+      <div className="dashboard">
+        <h1>Your Recipes!</h1>
+        <form className="search-group" onSubmit={handleSubmit}>
+          <div>
+            <input className="search-bar" type="search" value={searchTerm} onChange={handleChange} /><br/>
+            <button>Search</button>
+          </div>
+         
+        </form>
+        <div className="Recipe-Container">
+          {recipes.map((recipe) => {
+            return (
+              <ul>
+                <li key={recipe.id}>{recipe.title}</li>
+                <li key={recipe.id}>{recipe.source}</li>
+                <li key={recipe.id}>{recipe.category}</li>
+                <li key={recipe.id}>{recipe.instructions}</li>
+              </ul>
+            );
+          })}
         </div>
       </form>
       <div className="Recipe-Container">
@@ -59,6 +76,7 @@ const Dashboard = () => {
             </div>
           );
         })}
+
       </div>
     </div>
   );

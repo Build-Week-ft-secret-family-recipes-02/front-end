@@ -1,36 +1,32 @@
-import React, { useState, useEffect } from "react";
-import "../styles/SignUpPage.css"
+import React, { useState } from "react";
+import "../styles/SignUpPage.css";
 import axios from "axios";
+
+
 const SignUpPage = () => {
-    const [error, setError] = useState(false)
-    const [confirmPW, setConfirmPW] = useState({password: ""})
-    const [form, setForm] = useState({
-        username: "",
-        password: ""
-    })
+    const [error, setError] = useState(false);
+    const [confirmPW, setConfirmPW] = useState({password: ""});
+    const [form, setForm] = useState({username: "", password: ""});
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(confirmPW.password === form.password)
-        return axios.post('https://bloomtechrecipebook.herokuapp.com/api/users', form)
-        .then(resp => {
-            setError(false)
-        })
-        .catch(err => setError(true))
+        if(confirmPW.password !== form.password) return
+        axios
+        .post('https://bloomtechrecipebook.herokuapp.com/api/users', form)
+        .then(resp => {setError(false)})
+        .catch(err => console.log(err))
+        .finally(setForm({username: "", password:""}));
+        setError(true);
     }
 
     const onChange = (e) => {
-        e.preventDefault()
-        setForm({
-            ...form, [e.target.name]: e.target.value
-        })
+        e.preventDefault();
+        setForm({...form, [e.target.name]: e.target.value});
     }
 
     const confirmPasswordOnChange = (e) => {
-        e.preventDefault()
-        setConfirmPW({
-            ...confirmPW, [e.target.name]:e.target.value
-        })
+        e.preventDefault();
+        setConfirmPW({...confirmPW, [e.target.name]:e.target.value});
     }
     
     return (
@@ -54,7 +50,7 @@ const SignUpPage = () => {
                         </div>
                         <div className="input-group">
                             <input 
-                            type="text"
+                            type="password"
                             name="password"
                             className="input-field"
                             placeholder="Password"
@@ -65,7 +61,7 @@ const SignUpPage = () => {
                          </div>
                          <div className="input-group">
                             <input 
-                            type="text"
+                            type="password"
                             name="password"
                             className="input-field"
                             placeholder="Confirm Password"

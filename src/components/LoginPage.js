@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import "../styles/LoginPage.css"
+import "../styles/LoginPage.css";
+import axios from "axios";
+
 
 const LoginPage = () => {
-    const [error, setError] = useState(false) 
-
+    const [error, setError] = useState(false);
+    const [form, setForm] = useState({username: "",password: ""});
+    
     return (
         <div className="login-page">
             <div className="login-box">
