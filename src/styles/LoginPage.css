@@ -105,6 +105,8 @@ button {
     color: #f8f8ff;
     border-style: none;
     font-weight: 700;
+    position: relative;
+    bottom: 13px;
 }
 
 button:hover {

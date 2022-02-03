@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import "../styles/AddNewRecipes.css"
-
-const AddNewRecipes = () => {
-  const [image, setImage] = useState()
-  const [recipe, setRecipe] = useState({
+import AllRecipesContext from "../context/AllRecipes";
+import { useHistory } from "react-router";
+import axiosWithAuth from "../util/axiosWithAuth";
+const initialState = {
     title: "",
     source: "",
     ingredients: "",
     instructions: "",
     category: "",
-  });
+}
+
+const AddNewRecipes = () => {
+  const { allRecipes, setAllRecipes } = useContext(AllRecipesContext)
+  const [recipe, setRecipe] = useState(initialState);
+  const { push } = useHistory();
 
   const handleChange = (e) => {
     setRecipe({
@@ -21,18 +26,18 @@ const AddNewRecipes = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    axiosWithAuth().post('https://bloomtechrecipebook.herokuapp.com/api/recipes', recipe)
+    .then(resp=> setAllRecipes([...allRecipes, resp.data]))
+    .catch(err => console.log(err))
+    .finally(setRecipe(initialState))
+    push('/dashboard')
   };
-
-  const fileUp = (e) => {
-    const imageUpload = e.target.value;
-    setImage(imageUpload)
-  }
 
   return (
     <div className="page-container">
       <h1>Add New Recipe</h1>
       <div className="form-container">
-        <form className="form">
+        <form className="form" onSubmit={handleSubmit}>
           <div className="input-group">
             <input
               className="input-field"
@@ -77,7 +82,7 @@ const AddNewRecipes = () => {
             />
             <label className="input-label">Category</label>
           </div>
-          <button onSubmit={handleSubmit}>Submit</button>
+          <button>Submit</button>
         </form>
         <div className="right-container">
           <div className="img">
@@ -92,8 +97,6 @@ const AddNewRecipes = () => {
                 placeholder="Type your recipe instructions here"
 
               />
-              <input type="file" onChange={fileUp}/>
-              <label className="instructions-label">Instructions</label>
           </div>
         </div>
       </div>

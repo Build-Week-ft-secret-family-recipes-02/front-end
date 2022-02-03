@@ -1,22 +1,29 @@
 import React, { useState } from "react";
 import "../styles/SignUpPage.css";
 import axios from "axios";
+import { useHistory } from "react-router";
 
 
 const SignUpPage = () => {
     const [error, setError] = useState(false);
     const [confirmPW, setConfirmPW] = useState({password: ""});
     const [form, setForm] = useState({username: "", password: ""});
+    const { push } = useHistory()
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(confirmPW.password !== form.password) return
-        axios
-        .post('https://bloomtechrecipebook.herokuapp.com/api/users', form)
-        .then(resp => {setError(false)})
-        .catch(err => console.log(err))
-        .finally(setForm({username: "", password:""}));
-        setError(true);
+        if(confirmPW.password !== form.password) return setError(true);
+        axios.post('https://bloomtechrecipebook.herokuapp.com/api/users', form)
+            .then(resp => {
+                setError(false)
+                push('/dashboard')
+            })
+            .catch(err => console.log(err))
+            .finally(
+                setForm({username: "", password:""}),
+                setConfirmPW({password: ""})
+                );
+        
     }
 
     const onChange = (e) => {
@@ -56,6 +63,7 @@ const SignUpPage = () => {
                             placeholder="Password"
                             value={confirmPW.password}
                             onChange={confirmPasswordOnChange}
+                            autoComplete="off"
                             />
                             <label className="input-label"><span>Password</span></label>
                          </div>
@@ -67,11 +75,12 @@ const SignUpPage = () => {
                             placeholder="Confirm Password"
                             value={form.password}
                             onChange={onChange}
+                            autoComplete="off"
                             />
                             <label className="input-label"><span>Confirm Password</span></label>
                             {error && <span>*Your passwords do not match</span>}
-                            <button>Create Account</button>
                         </div>  
+                        <button>Create Account</button>
                     </form>
                 </div>
             </div>
