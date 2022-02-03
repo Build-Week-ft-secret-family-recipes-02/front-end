@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import "../styles/Dashboard.css";
-import EditRecipe from "./EditRecipe";
+import Recipe from "./Recipe";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -61,12 +61,7 @@ const Dashboard = () => {
                   handleClick(e, recipe);
                 }}
               >
-                <h3>{recipe.title}</h3>
-                <ul>
-                  <li>{recipe.source}</li>
-                  <li>{recipe.category}</li>
-                  <li>{recipe.instructions}</li>
-                </ul>
+                <Recipe recipe={recipe} />
               </div>
             );
           })}

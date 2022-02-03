@@ -6,8 +6,6 @@ const Recipe = (props) => {
   const { recipe } = props;
   const { push } = useHistory();
 
-  useEffect(() => {});
-
   const handleEdit = () => {
     push(`/recipes/update/${recipe.id}`);
   };
