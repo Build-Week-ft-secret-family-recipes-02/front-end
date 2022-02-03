@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import "../styles/LoginPage.css";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
     const [error, setError] = useState(false);
     const [form, setForm] = useState({username: "",password: ""});
     
+
     return (
         <div className="login-page">
             <div className="login-box">
@@ -38,7 +39,7 @@ const LoginPage = () => {
                             {error && <span>*Your username or password is incorrect</span>}
                             <br />
                             <br />
-                            <span>Not a member? <a href="/">Sign Up</a></span>
+                            <span>Not a member? <Link to="/signup">Sign Up</Link></span>
                         </div>
                             <button>Log In</button>
                     </form>
