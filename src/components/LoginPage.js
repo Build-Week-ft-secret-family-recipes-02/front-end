@@ -21,7 +21,7 @@ const LoginPage = () => {
         username: "dave",
         password: "dave123",
       })
-      .then((resp) => console.log(resp))
+      .then((resp) => setForm(resp))
       .catch((err) => console.log(err));
   };
 
