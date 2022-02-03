@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "../styles/AddNewRecipes.css"
 
 const AddNewRecipes = () => {
+  const [image, setImage] = useState()
   const [recipe, setRecipe] = useState({
     title: "",
     source: "",
@@ -21,58 +23,79 @@ const AddNewRecipes = () => {
     e.preventDefault();
   };
 
+  const fileUp = (e) => {
+    const imageUpload = e.target.value;
+    setImage(imageUpload)
+  }
+
   return (
-    <div>
+    <div className="page-container">
       <h1>Add New Recipe</h1>
       <div className="form-container">
-        <form>
-          <label>
-            Title
+        <form className="form">
+          <div className="input-group">
             <input
+              className="input-field"
               type="text"
               name="title"
               value={recipe.title}
               onChange={handleChange}
+              placeholder="title"
             />
-          </label>
-          <label>
-            Source
+            <label className="input-label">Title</label>
+          </div>
+          <div className="input-group">
             <input
+              className="input-field"
               type="text"
               name="source"
               value={recipe.source}
               onChange={handleChange}
+              placeholder="source"
             />
-          </label>
-          <label>
-            Ingredients
+            <label className="input-label">Source</label>
+          </div>
+          <div className="input-group">
             <input
+              className="input-field"
               type="text"
               name="ingredients"
               value={recipe.ingredients}
               onChange={handleChange}
+              placeholder="ingredients"
             />
-          </label>
-          <label>
-            Instructions
+            <label className="input-label">Ingredients</label>
+          </div>
+          <div className="input-group">
             <input
-              type="text"
-              name="instructions"
-              value={recipe.instructions}
-              onChange={handleChange}
-            />
-          </label>
-          <label>
-            Category
-            <input
+              className="input-field"
               type="text"
               name="category"
               value={recipe.category}
               onChange={handleChange}
+              placeholder="category"
             />
-          </label>
+            <label className="input-label">Category</label>
+          </div>
           <button onSubmit={handleSubmit}>Submit</button>
         </form>
+        <div className="right-container">
+          <div className="img">
+            
+          </div>
+          <div className="instructions">
+              <textarea
+                type="text"
+                name="instructions"
+                value={recipe.instructions}
+                onChange={handleChange}
+                placeholder="Type your recipe instructions here"
+
+              />
+              <input type="file" onChange={fileUp}/>
+              <label className="instructions-label">Instructions</label>
+          </div>
+        </div>
       </div>
     </div>
   );
