@@ -1,4 +1,3 @@
-
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
@@ -9,7 +8,6 @@ import Dashboard from "./components/Dashboard";
 import Recipe from "./components/Recipe";
 import AddNewRecipes from "./components/AddNewRecipes";
 import EditRecipe from "./components/EditRecipe";
-
 
 function App() {
   return (
@@ -33,11 +31,10 @@ function App() {
         <Route path="/signup">
           <SignUpPage />
         </Route>
-        <Route path="/">
+        <Route exact path="/">
           <LoginPage />
         </Route>
       </Switch>
-
     </div>
   );
 }
