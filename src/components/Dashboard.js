@@ -11,7 +11,7 @@ const Dashboard = () => {
   useEffect(() => {
     axios
       .get("https://bloomtechrecipebook.herokuapp.com/api/recipes")
-      .then((resp) => console.log(resp))
+      .then((resp) => setRecipes(resp.data))
       .catch((err) => console.log(err));
   }, []);
 
@@ -21,18 +21,18 @@ const Dashboard = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    recipes.filter((recipe) => {
-      return setRecipes(
-        recipe.title === searchTerm || recipe.category === searchTerm
-      );
-    });
+    setRecipes(
+      recipes.filter((recipe) => {
+        return recipe.title === searchTerm || recipe.category === searchTerm;
+      })
+    );
   };
 
   const { push } = useHistory();
 
   function handleClick(e, recipe) {
     e.preventDefault();
-    push(`/dashboard/${recipe.id}`);
+    push(`/dashboard/${recipe.recipe_id}`);
   }
 
   return (
@@ -56,15 +56,17 @@ const Dashboard = () => {
             return (
               <div
                 className="Recipe-card"
-                key={recipe.id}
+                key={recipe.recipe_id}
                 onClick={(e) => {
                   handleClick(e, recipe);
                 }}
               >
                 <h3>{recipe.title}</h3>
-                <p>{recipe.source}</p>
-                <p>{recipe.category}</p>
-                <p>{recipe.instructions}</p>
+                <ul>
+                  <li>{recipe.source}</li>
+                  <li>{recipe.category}</li>
+                  <li>{recipe.instructions}</li>
+                </ul>
               </div>
             );
           })}
