@@ -1,31 +1,28 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import "../styles/Dashboard.css";
 import EditRecipe from "./EditRecipe";
-
+import AllRecipesContext from "../context/AllRecipes";
+import axiosWithAuth from "../util/axiosWithAuth";
 const Dashboard = () => {
+  const { allRecipes } = useContext(AllRecipesContext)
   const [searchTerm, setSearchTerm] = useState("");
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("https://bloomtechrecipebook.herokuapp.com/api/recipes")
-      .then((resp) => console.log(resp))
-      .catch((err) => console.log(err));
+   axiosWithAuth().get('https://bloomtechrecipebook.herokuapp.com/api/recipes')
+   .then(resp => setRecipes(resp.data))
+   .catch(err => console.log(err))
   }, []);
 
   const handleChange = (e) => {
-    setSearchTerm(e.target.value);
+    setSearchTerm(e.target.value)
   };
 
-  const handleSubmit = (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
-    recipes.filter((recipe) => {
-      return setRecipes(
-        recipe.title === searchTerm || recipe.category === searchTerm
-      );
-    });
+    setRecipes(recipes.filter(recipe => recipe.title === searchTerm || recipe.category === searchTerm))
   };
 
   const { push } = useHistory();
@@ -39,7 +36,8 @@ const Dashboard = () => {
     <div className="dashboard-container">
       <div className="dashboard">
         <h1>Your Recipes!</h1>
-        <form className="search-group" onSubmit={handleSubmit}>
+        <br />
+        <form className="search-group" onSubmit={handleSearch}>
           <div>
             <input
               className="search-bar"
@@ -47,24 +45,43 @@ const Dashboard = () => {
               value={searchTerm}
               onChange={handleChange}
             />
-            <br />
-            <button>Search</button>
           </div>
+          <br />
+            <button onClick={(e) => {e.preventDefault(); push('/new')}} >Add New Recipe</button>
         </form>
         <div className="Recipe-Container">
-          {recipes.map((recipe) => {
+
+          {recipes.filter(recipe => {
+            if(searchTerm === "") return recipe
+            else return recipe.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            recipe.category.toLowerCase().includes(searchTerm.toLowerCase())
+          }).map((recipe, index) => {
             return (
-              <div
-                className="Recipe-card"
-                key={recipe.id}
-                onClick={(e) => {
-                  handleClick(e, recipe);
-                }}
-              >
-                <h3>{recipe.title}</h3>
-                <p>{recipe.source}</p>
-                <p>{recipe.category}</p>
-                <p>{recipe.instructions}</p>
+              <div className="Recipe-card"
+                    key={index}
+                    onClick={(e) => {handleClick(e, recipe);}}
+              > 
+                <div className="card-img">
+              
+                </div>
+
+                <div className="card-info">
+                  <div className="card-title">
+                    <p>{recipe.title}</p>
+                  </div>
+                  <div className="col-1">
+                    <div className="left">
+                      <p>{recipe.category}</p>
+                      <p>{recipe.source}</p>
+                    </div>
+                    <div className="right">
+                      <p>{recipe.ingredients}</p>
+                    </div>
+                  </div>
+                  <div className="col-2">
+                    <p>{recipe.instructions}</p>
+                  </div>
+                </div>
               </div>
             );
           })}

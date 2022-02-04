@@ -18,6 +18,9 @@
     width: 100%;
     height: 40%;
     border-bottom: 1px solid black;
+    background-image: url('https://blog.flipbuilder.com/wp-content/uploads/2018/12/cookbook-general.jpg');
+    background-size: cover;
+    background-position: center;
 }
 
 .signup-form {
