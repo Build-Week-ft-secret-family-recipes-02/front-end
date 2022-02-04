@@ -1,12 +1,12 @@
-.page-container {
+.edit-box {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 100vh;
-    border: 1px solid black;
+    height: 95vh;
 }
+
 
 .form-container {
     width: 80%;
@@ -71,10 +71,8 @@
 }
 
 .img {
-    width: 90%;
+    width: 100%;
     height: 50%;
-    border: 1px solid black;
-    margin: 2% auto;
 }
 
 .instructions {
