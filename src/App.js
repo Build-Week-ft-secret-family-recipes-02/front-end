@@ -20,6 +20,7 @@ function App() {
     loggedIn: false
   })
 
+
   return (
     <div className="App">
       <AllRecipesContext.Provider value={{allRecipes, setAllRecipes, isLoggedIn, setIsLoggedIn}}>

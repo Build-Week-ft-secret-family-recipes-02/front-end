@@ -29,7 +29,7 @@ const AddNewRecipes = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axiosWithAuth().post('https://bloomtechrecipebook.herokuapp.com/api/recipes', recipe)
-    .then(resp=> setAllRecipes([...allRecipes, resp.data]))
+    .then(resp => setAllRecipes([...allRecipes, resp.data]))
     .catch(err => console.log(err))
     .finally(setRecipe(initialState))
     push('/dashboard')

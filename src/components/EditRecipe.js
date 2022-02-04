@@ -33,8 +33,8 @@ const EditRecipe = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // axiosWithAuth().put()
-    // .then(setAllRecipes())
+    axiosWithAuth().put('')
+    .then(setAllRecipes())
   }
 
   return (
