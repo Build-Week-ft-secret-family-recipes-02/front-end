@@ -9,9 +9,9 @@
 
 .dashboard {
     width: 90%;
-    height: 90vh;
-    border-radius: 20px;
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    height: 85vh;
+    background-color: #F8F8FE;
+    backdrop-filter: blur(2px);
 }
 
 .search-group {
@@ -24,7 +24,7 @@
     min-height: 40px;
     padding-bottom: 7%;
     margin: 3% auto;
-    box-shadow: rgba(0, 0, 0, 0) 0px 2px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
+    box-shadow: rgba(0, 0, 0, 0) 0px 20px 5px 0px, rgba(0, 0, 0, 0.05) 0px 1px 1px 0px;
 }
 
 .search-bar {
@@ -59,56 +59,83 @@ button:hover {
 }
 
 .Recipe-Container {
-    height: 51%;
+    height: 47%;
+    width: 92%;
+    margin: 0 auto;
     overflow:scroll;
 }
 
 .Recipe-card {
-    border: 1px solid black;
-    width: 90%;
+    width: 80%;
     height: 35vh;
-    margin: 2% 3%;
+    margin: 1% auto;
     display: flex;
     flex-direction: row;
     transition: all 0.2s;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    background-color: #F8F8FE;
+
 }
 
-.Recipe-card:hover {
-    transform: scale(1.03);
-}
 
 .card-img {
-    width: 40%;
-    border-right: 1px solid black;
+    width: 35%;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
 .card-info {
-    width: 60%;
+    width: 100%;
     display: flex;
     flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 0px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 .col-1 {
     width: 100%;
     height: 30%;
-    border: 1px solid green;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+    text-align: left;
+    margin-left: 2%;
+    
 }
 
 .card-title {
     width: 100%;
     height: 20%;
     padding: 0;
-    border: 1px solid purple;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 0px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    
 }
 
 .col-2 {
     width: 100%;
     height: 70%;
-    border: 1px solid red;
+    text-align: left;
+    margin-left: 2%;
 }
+
 
 .recipe-info {
     width: 100%;
+}
+
+.buttons {
+    text-align: right;
+    margin: 1%;
+}
+
+.buttons span {
+    padding: 0.4em;
+    pointer-events: visible;
+}
+
+.buttons span:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.buttons span:nth-child(2):hover {
+    color: red;
+}
+
+.buttons span:nth-child(1):hover {
+    color: green;
 }

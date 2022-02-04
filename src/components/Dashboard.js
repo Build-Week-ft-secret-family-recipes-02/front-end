@@ -5,14 +5,21 @@ import "../styles/Dashboard.css";
 import EditRecipe from "./EditRecipe";
 import AllRecipesContext from "../context/AllRecipes";
 import axiosWithAuth from "../util/axiosWithAuth";
+import Recipe from "./Recipe";
+
 const Dashboard = () => {
-  const { allRecipes } = useContext(AllRecipesContext)
+  const { allRecipes, setAllRecipes } = useContext(AllRecipesContext)
   const [searchTerm, setSearchTerm] = useState("");
   const [recipes, setRecipes] = useState([]);
+  const { push } = useHistory();
+
 
   useEffect(() => {
    axiosWithAuth().get('https://bloomtechrecipebook.herokuapp.com/api/recipes')
-   .then(resp => setRecipes(resp.data))
+   .then(resp => {
+     setRecipes(resp.data)
+     setAllRecipes(resp.data)
+    })
    .catch(err => console.log(err))
   }, []);
 
@@ -24,13 +31,7 @@ const Dashboard = () => {
     e.preventDefault();
     setRecipes(recipes.filter(recipe => recipe.title === searchTerm || recipe.category === searchTerm))
   };
-
-  const { push } = useHistory();
-
-  function handleClick(e, recipe) {
-    e.preventDefault();
-    push(`/dashboard/${recipe.id}`);
-  }
+  
 
   return (
     <div className="dashboard-container">
@@ -57,32 +58,7 @@ const Dashboard = () => {
             recipe.category.toLowerCase().includes(searchTerm.toLowerCase())
           }).map((recipe, index) => {
             return (
-              <div className="Recipe-card"
-                    key={index}
-                    onClick={(e) => {handleClick(e, recipe);}}
-              > 
-                <div className="card-img">
-              
-                </div>
-
-                <div className="card-info">
-                  <div className="card-title">
-                    <p>{recipe.title}</p>
-                  </div>
-                  <div className="col-1">
-                    <div className="left">
-                      <p>{recipe.category}</p>
-                      <p>{recipe.source}</p>
-                    </div>
-                    <div className="right">
-                      <p>{recipe.ingredients}</p>
-                    </div>
-                  </div>
-                  <div className="col-2">
-                    <p>{recipe.instructions}</p>
-                  </div>
-                </div>
-              </div>
+              <Recipe recipe={recipe} key={recipe.recipe_id}/>
             );
           })}
         </div>

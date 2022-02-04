@@ -1,25 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "../styles/LoginPage.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router";
+import AllRecipesContext from "../context/AllRecipes";
 
 const LoginPage = () => {
     const [error, setError] = useState(false);
     const [form, setForm] = useState({username: "",password: ""});
-    const { push } = useHistory()
+    const { push } = useHistory() 
+    const { setIsLoggedIn, isLoggedIn } = useContext(AllRecipesContext)
+
     const onChange = (e) => { 
         setForm({ ...form, [e.target.name] : e.target.value})
         }
 
     const onFormSubmit = (e) => { 
         e.preventDefault() 
-
         axios
             .post("https://bloomtechrecipebook.herokuapp.com/api/users/login", form)
-            .then(resp => {localStorage.setItem('token', resp.data.token); push('/dashboard')})
+            .then(resp => {localStorage.setItem('token', resp.data.token); push('/dashboard'); })
             .catch(err => setError(true))
-            .finally(setForm( {...form, username: "", password: "" } ))
+            .finally(
+                setIsLoggedIn({...isLoggedIn, username: form.username, loggedIn: true}),
+                setForm( {...form, username: "", password: "" } )
+            )
     }
 
     return (

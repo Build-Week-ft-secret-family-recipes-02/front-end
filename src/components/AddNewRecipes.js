@@ -4,6 +4,7 @@ import "../styles/AddNewRecipes.css"
 import AllRecipesContext from "../context/AllRecipes";
 import { useHistory } from "react-router";
 import axiosWithAuth from "../util/axiosWithAuth";
+
 const initialState = {
     title: "",
     source: "",
@@ -13,6 +14,7 @@ const initialState = {
 }
 
 const AddNewRecipes = () => {
+  const [image, setImage] = useState()
   const { allRecipes, setAllRecipes } = useContext(AllRecipesContext)
   const [recipe, setRecipe] = useState(initialState);
   const { push } = useHistory();
@@ -27,7 +29,7 @@ const AddNewRecipes = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     axiosWithAuth().post('https://bloomtechrecipebook.herokuapp.com/api/recipes', recipe)
-    .then(resp=> setAllRecipes([...allRecipes, resp.data]))
+    .then(resp => setAllRecipes([...allRecipes, resp.data]))
     .catch(err => console.log(err))
     .finally(setRecipe(initialState))
     push('/dashboard')
