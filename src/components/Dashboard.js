@@ -32,7 +32,7 @@ const Dashboard = () => {
 
   function handleClick(e, recipe) {
     e.preventDefault();
-    push(`/dashboard/${recipe.recipe_id}`);
+    push(`/recipe/${recipe.recipe_id}`);
   }
 
   return (
