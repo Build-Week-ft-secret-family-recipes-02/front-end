@@ -19,22 +19,22 @@ const EditRecipe = () => {
 
   useEffect(() => {
     axiosWithAuth()
-        .get(`https://bloomtechrecipebook.herokuapp.com/api/recipes`)
-        .then(resp => {
-          const data = resp.data.filter(recipe => recipe.recipe_id === parseInt(id))
-          setEditedRecipe(data[0])
-        })
-        .catch(err => console.log(err))
-}, [])
+      .get(`https://bloomtechrecipebook.herokuapp.com/api/recipes`)
+      .then(resp => {
+        const data = resp.data.filter(recipe => recipe.recipe_id === parseInt(id))
+        setEditedRecipe(data[0])})
+      .catch(err => console.log(err))
+  }, [])
 
   const handleChange = (e) => {
     setEditedRecipe({...editedRecipe, [e.target.name]: e.target.value})
-}
+  } 
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    axiosWithAuth().put('')
-    .then(setAllRecipes())
+    // axiosWithAuth()
+    // .put('')
+    // .then(setAllRecipes())
   }
 
   return (
