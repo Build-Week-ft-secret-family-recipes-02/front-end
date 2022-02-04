@@ -22,6 +22,8 @@ function App() {
   })
 
 
+  
+
   return (
     <div className="App">
       <AllRecipesContext.Provider value={{allRecipes, setAllRecipes, isLoggedIn, setIsLoggedIn}}>
@@ -29,9 +31,6 @@ function App() {
         <Switch>
           <Route path="/dashboard/edit/:id">
             <EditRecipe />
-          </Route>
-          <Route path="/dashboard/:id">
-            <Recipe />
           </Route>
           <Route path="/new">
             <AddNewRecipes />

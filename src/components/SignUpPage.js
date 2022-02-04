@@ -15,8 +15,9 @@ const SignUpPage = () => {
         if(confirmPW.password !== form.password) return setError(true);
         axios.post('https://bloomtechrecipebook.herokuapp.com/api/users', form)
             .then(resp => {
+                localStorage.setItem('token', resp.data.token)
                 setError(false)
-                push('/dashboard')
+                push('/dashboard')    
             })
             .catch(err => console.log(err))
             .finally(

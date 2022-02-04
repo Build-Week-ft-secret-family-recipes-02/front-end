@@ -12,16 +12,15 @@ const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [recipes, setRecipes] = useState([]);
   const { push } = useHistory();
-
-
+  
   useEffect(() => {
-   axiosWithAuth().get('https://bloomtechrecipebook.herokuapp.com/api/recipes')
-   .then(resp => {
-     setRecipes(resp.data)
-     setAllRecipes(resp.data)
-    })
-   .catch(err => console.log(err))
-  }, []);
+   axiosWithAuth()
+    .get('https://bloomtechrecipebook.herokuapp.com/api/recipes')
+    .then(resp => {
+      setRecipes(resp.data)
+      setAllRecipes(resp.data)})
+    .catch(err => console.log(err))
+  },[]);
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value)
@@ -51,16 +50,13 @@ const Dashboard = () => {
             <button onClick={(e) => {e.preventDefault(); push('/new')}} >Add New Recipe</button>
         </form>
         <div className="Recipe-Container">
-
-          {recipes.filter(recipe => {
+          {
+          recipes
+          .filter(recipe => {
             if(searchTerm === "") return recipe
-            else return recipe.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            recipe.category.toLowerCase().includes(searchTerm.toLowerCase())
-          }).map((recipe, index) => {
-            return (
-              <Recipe recipe={recipe} key={recipe.recipe_id}/>
-            );
-          })}
+            else return recipe.title.toLowerCase().includes(searchTerm.toLowerCase()) || recipe.category.toLowerCase().includes(searchTerm.toLowerCase())})
+          .map((recipe) => { return (<Recipe recipe={recipe} key={recipe.recipe_id}/>)})
+          }
         </div>
       </div>
     </div>
